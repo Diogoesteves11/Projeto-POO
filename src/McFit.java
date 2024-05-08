@@ -7,27 +7,23 @@ import java.io.*;
 public class McFit implements Serializable {
     private Map<String, Utilizador> userMap;
     private Map<String,Atividade> ListaAtividades; // Lista as atividades disponiveis
-    private List<PlanoTreino> planos;
     private LocalDate dataAtual;
 
     public McFit() {
         this.userMap = new HashMap<>();
         this.ListaAtividades = new HashMap<>();
-        this.planos = new ArrayList<>();
         this.dataAtual = LocalDate.now();
     }
 
     public McFit(Map<String, Utilizador> userMap, Map<String,Atividade> listaAtividades, ArrayList<PlanoTreino> planos, LocalDate data) {
         this.userMap = userMap;
         this.ListaAtividades = listaAtividades;
-        this.planos = planos;
         this.dataAtual = data;
     }
 
     public McFit(McFit app) {
         this.userMap = new HashMap<>(app.getUserMap());
         this.ListaAtividades = new HashMap<>(app.getListaAtividades());
-        this.planos = new ArrayList<>(app.getPlanos());
         this.dataAtual = LocalDate.of(app.getData().getYear(), app.getData().getMonth(), app.getData().getDayOfMonth());
     }
 
@@ -40,15 +36,11 @@ public class McFit implements Serializable {
         final StringBuffer sb = new StringBuffer();
         sb.append("Users: ").append(userMap.toString()).append('\n');
         sb.append("Atividades: ").append(ListaAtividades.toString()).append("\n");
-        sb.append("Planos: ").append(planos.toString()).append("\n");
         return sb.toString();
     }
 
     public LocalDate getData(){
         return this.dataAtual;
-    }
-    public List<PlanoTreino> getPlanos() {
-        return new ArrayList<>(this.planos);
     }
     public Map<String, Utilizador> getUserMap() {
         return userMap.entrySet().stream().collect(Collectors.toMap(k->k.getKey(), v-> v.getValue().clone()));
@@ -66,11 +58,6 @@ public class McFit implements Serializable {
         }
         return atividades;
     }
-
-    public void setPlanos(List<PlanoTreino> planos) {
-        this.planos = new ArrayList<>(planos);
-    }
-
     public void setUserMap(Map<String, Utilizador> userMap) {
         this.userMap =  userMap.entrySet().stream().collect(Collectors.toMap(k->k.getKey(), v-> v.getValue().clone()));
     }
